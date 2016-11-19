@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<title>K-W Crime Map</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link type="text/css"       href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+<ul class="w3-navbar w3-black w3-card-2 w3-left-align">
+  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+    <a class="w3-padding-large" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+  </li>
+  <li class="w3-hide-small"><a href="#mapView" class="w3-padding-large">Map View</a></li>
+  <li class="w3-hide-small w3-dropdown-hover">
+    <a href="javascript:void(0)" class="w3-hover-none w3-padding-large" title="crimeTypes">Crime Types <i class="fa fa-caret-down"></i></a>
+    <div class="w3-dropdown-content w3-white w3-card-4">
+      <a href="#mapView">Burglary</a>
+      <a href="#mapView">Motor Vehicle Crime</a>
+      <a href="#mapView">Robbery</a>
+      <a href="#mapView">Violence Against the Person</a>
+    </div>
+  </li>
+  <li class="w3-hide-small w3-dropdown-hover">
+    <a href="javascript:void(0)" class="w3-hover-none w3-padding-large" title="refineMap">Refine Map <i class="fa fa-caret-down"></i></a>
+    <div class="w3-dropdown-content w3-white w3-card-4">
+      <a href="#mapView">Show Police Stations</a>
+      <a href="#mapView">Extras</a>
+      <a href="#mapView">Media</a>
+    </div>
+  </li>
+  <li class="w3-hide-small"><a href="#textView" class="w3-padding-large">Text View</a></li>
+  <li class="w3-hide-small"><a href="#contact" class="w3-padding-large">Contact</a></li>
+  <li class="w3-hide-small w3-right"><a href="javascript:void(0)" class="w3-padding-large w3-hover-red"><i class="fa fa-search"></i></a></li>
+  <li class="w3-hide-small w3-right"><div class="w3-half" style="padding:10px 2px;"><input class="w3-padding-small w3-hover-white" placeholder="Search a place" type="text"></div></li>
+</ul>
+</div>
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <ul class="w3-navbar w3-left-align w3-black">
+    <li><a class="w3-padding-large" href="#band">BAND</a></li>
+    <li><a class="w3-padding-large" href="#tour">TOUR</a></li>
+    <li><a class="w3-padding-large" href="#contact">CONTACT</a></li>
+    <li><a class="w3-padding-large" href="#">MERCH</a></li>
+  </ul>
+</div>
+
+<!-- Page content -->
+
+  <!-- The Map View Section -->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:100%" id="mapView">
+    <div class="w3-black" >
+      <div id="googleMap" style="height:660px;width:100%;position:relative;">
+        <!-- <script src="js/maps.js"></script> -->
+        <script>
+        function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('googleMap'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+        </script>
+
+        <script async defer 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAmCz6q8JNYhjRwdAn-bI0dFoy8AHDrjI&callback=initMap">
+        </script>
+      </div>
+      <!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
+    </div>
+<!-- 
+    <div id="map-controls" class="w3-col m6 w3-small w3-margin-bottom" style="float:right;background-color:#f0f0f0;border:1px solid #dadada;width:150px;position:absolute;top:1000px;right:20px;padding:5px;">
+      <p align="left"><strong>Map info</strong></p>
+      <div name="control-sections">
+        <div class="section">
+          <p align="left"><strong>Crime Type:</strong></p>
+          <p>Total Notifiable Offences</p>
+          <p><strong>Data:</strong>Semptember 2016</p>
+        </div>
+      </div>
+      <div name="control-sections">
+        <div class="section">
+          <p><strong></strong></p>
+          <p></p>
+        </div>
+      </div>
+      <div name="control-sections">
+        <div class="section">
+          <p><strong></strong></p>
+          <p></p>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="map-key" class="w3-col m6 w3-small w3-margin-bottom" style="background-color:#f0f0f0;border:1px solid #dadada;width:150px;position:absolute;top:1000px;left:20px;padding:5px;">
+      <ul>
+        <li name="high" style="float:left;display:block;margin:3px;margin-top:-5px;margin-left:-30px;"><span class="w3-col.s1" style="border-color:#9f6e5f;background-color:#d5694c;height:15px;width:15px;margin-right:2px;border:1px solid;padding-right:17px;"></span>High</li><br>
+        <li name="aboveAverage" style="float:left;display:block;margin:3px;margin-left:-30px;"><span class="w3-col.s1" style="border-color:#b6825b;background-color:#ffa84b;height:15px;width:15px;margin-right:2px;border:1px solid;padding-right:17px;"></span>Above average</li><br>
+        <li name="average" style="float:left;display:block;margin:3px;margin-left:-30px;"><span class="w3-col.s1" style="border-color:#a7a153;background-color:#f7ed4d;height:15px;width:15px;margin-right:2px;border:1px solid;padding-right:17px;"></span>Average</li><br>
+        <li name="belowAverage" style="float:left;display:block;margin:3px;margin-left:-30px;"><span class="w3-col.s1" style="border-color:#509bbb;background-color:#93d6f1;height:15px;width:15px;margin-right:2px;border:1px solid;padding-right:17px;"></span>Below average</li><br>
+        <li name="low" style="float:left;display:block;margin:3px;margin-left:-100.5px;margin-top:22.5px;"><span class="w3-col.s1" style="border-color:#5f65bb;background-color:#8288e6;height:15px;width:15px;margin-right:2px;border:1px solid;padding-right:17px;"></span>Low or no crime</li><br>
+      </ul>
+    </div> -->
+  </div>
+
+
+
+
+  <!-- The Text View Section -->
+  <div class="w3-white" id="textView">
+    <div class="w3-container w3-content w3-padding-64" style="max-width:100%" >
+      <h2 class="w3-wide w3-center">TEXTVIEW</h2>
+      <p class="w3-opacity w3-center"><i>Analysis datas with charts and diagrams~</i></p>
+      <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+        <div class="w3-third w3-margin-bottom" style="width:50%">
+          <div class="w3-container">
+            <h2>***</h2>
+            <table class="w3-table w3-bordered">
+              <tr class="w3-light-grey">
+                <th>***</th>
+                <th>***</th>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr class="w3-light-grey">
+               <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr class="w3-light-grey">
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr class="w3-light-grey">
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr class="w3-light-grey">
+                <th>***</th>
+                <td>***</td>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr class="w3-light-grey">
+                <th>***</th>
+                <td>***</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="w3-third w3-margin-bottom" style="width:50%">
+          <div class="w3-container">
+            <h2>***</h2>
+            <table class="w3-table w3-bordered ">
+              <tr class="w3-light-grey">
+                <th>***</th>
+                <th>***</th>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr class="w3-light-grey">
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+                <tr class="w3-light-grey">
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr class="w3-light-grey">
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr class="w3-light-grey">
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr>
+                <td>***</td>
+                <td>***</td>
+              </tr>
+              <tr class="w3-light-grey">
+                <td>***</td>
+                <td>***</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+    </div>
+
+
+  <!-- The Contact Section -->
+  <div class="w3-white" id="contact" style="max-height:500px">
+    <div class="w3-container w3-content w3-padding-64 " style="max-width:800px">
+      <h2 class="w3-wide w3-center">CONTACT</h2>
+      <p class="w3-opacity w3-center"><i>Our Team</i></p>
+      <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+
+          <div class="w3-third w3-margin-bottom" style="width:25%">
+            <img src="images/Xiang%20Li.JPG" style="width:100%" class="w3-hover-opacity" alt="name">
+            <div class="w3-container w3-white">
+              <p><b>Xiang Li</b></p>
+              <p class="w3-opacity">Email:</p>
+              <p>x723li@uwaterloo.ca</p>
+
+              <!--<button class="w3-btn w3-margin-bottom" onclick="document.getElementById('ticketModal').style.display='block'">Buy Tickets</button>-->
+            </div>
+          </div>
+          <div class="w3-third w3-margin-bottom" style="width:25%">
+            <img src="images/zhouChongyi.jpeg" style="width:100%" class="w3-hover-opacity" alt="name">
+            <div class="w3-container w3-white">
+              <p><b>Chongyi Zhou </b></p>
+              <p class="w3-opacity">Email:</p>
+              <p>c73zhou@uwaterloo.ca</p>
+
+
+              <!--<button class="w3-btn w3-margin-bottom" onclick="document.getElementById('ticketModal').style.display='block'">Buy Tickets</button>-->
+            </div>
+          </div>
+          <div class="w3-third w3-margin-bottom" style="width:25%">
+            <img src="images/shiJin.jpeg" style="width:100%" class="w3-hover-opacity" alt="name">
+            <div class="w3-container w3-white">
+              <p><b>Jin Shi</b></p>
+              <p class="w3-opacity">Email:</p>
+              <p>j66shi@uwaterloo.ca</p>
+
+              <!--<button class="w3-btn w3-margin-bottom" onclick="document.getElementById('ticketModal').style.display='block'">Buy Tickets</button>-->
+            </div>
+          </div>
+          <div class="w3-third w3-margin-bottom" style="width:25%">
+            <img src="images/wangJinghang.jpg" style="width:100%" class="w3-hover-opacity" alt="name">
+            <div class="w3-container w3-white">
+              <p><b>Jinghang Wang</b></p>
+              <p class="w3-opacity">Email:</p>
+                <p>j845wang@uwaterloo.ca</p>
+
+              <!--<button class="w3-btn w3-margin-bottom" onclick="document.getElementById('ticketModal').style.display='block'">Buy Tickets</button>-->
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+<!-- End Page Content -->
+</div>
+
+
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+  <a href="#" class="w3-hover-text-indigo"><i class="fa fa-facebook-official"></i></a>
+  <a href="#" class="w3-hover-text-red"><i class="fa fa-pinterest-p"></i></a>
+  <a href="#" class="w3-hover-text-light-blue"><i class="fa fa-twitter"></i></a>
+  <a href="#" class="w3-hover-text-grey"><i class="fa fa-flickr"></i></a>
+  <a href="#" class="w3-hover-text-indigo"><i class="fa fa-linkedin"></i></a>
+  <p class="w3-medium">Powered by <a href="#" target="_blank">Group 10</a></p>
+</footer>
+
+<!-- <script>
+// Automatic Slideshow - change image every 4 seconds
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 4000);
+}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script> -->
+
+</body>
+</html>

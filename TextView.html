@@ -1,0 +1,178 @@
+<!-- The Map View Section -->
+  <!DOCTYPE html>
+<html>
+<title>K-W Crime Map</title>
+    <!-- animsition CSS -->
+<link rel="stylesheet" href="css/animsition.min.css">
+
+<!-- vendor js -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<!-- animsition js -->
+<script src="css/jquery.animsition.min.js"></script>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link type="text/css"       href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+<ul class="w3-navbar w3-black w3-card-2 w3-right-align">
+  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+    <a class="w3-padding-large" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+  </li>
+  <li class="w3-hide-small w3-right"><a href="#mapView" class="w3-padding-large">Map View</a></li>
+  <li class="w3-hide-small w3-right"><a href="TextView.html" class="w3-padding-large">Text View</a></li>
+  <li class="w3-hide-small w3-right"><a href="#contact" class="w3-padding-large">Contact</a></li>
+</ul>
+</div>  
+ <div class="w3-white" id="textView">
+    <div class="w3-container w3-content w3-padding-64" style="max-width:100%" >
+    <script src="http://github.highcharts.com/master/highcharts.js"></script>
+    <script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
+    <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto; margin-top: 2em"></div>
+      something
+        </div>
+    </div>
+
+
+  </body>
+  </html>
+  <script>
+
+var myMap = new Map();
+myMap.set('tokyo',[7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5]);
+myMap.set('New York',[-0.2, 0.8, 5.7, 11.3]);
+myMap.set('Berlin',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('London',[3.9, 4.2, 5.7, 8.5]);
+myMap.set('Waterloo',[3.0,3.0,3.0,3.0]);
+
+myMap.set('Berlin1',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin2',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin3',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin4',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin5',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin6',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin7',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin8',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin9',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin0',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin11',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin12',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin13',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin14',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin15',[-0.9, 0.6, 3.5, 8.4]);
+myMap.set('Berlin',[-0.9, 0.6, 3.5, 8.4]);
+
+var myArray = new Array();
+
+$(function()
+        {
+          myMap.forEach(function(value,key){
+            var myObject = new Object();
+            myObject.name = key;
+            myObject.data = value;
+            myArray.push(myObject);
+          });
+          console.log(myArray.toString());
+        });
+var myXAxis = ['2011.1','2011.2','2011.3','2011.4','2011.5','2011.6','2011.7','2011.8','2011.9','2011.10','2011.11','2011.12','2012.1','2012.2','2012.3','20112.4','2012.5','2012.6','2012.7','2012.8','2012.9','2012.10','2012.11','2012.12','2013.1','2013.2','2013.3','2013.4','2013.5','2013.6','2013.7','2013.8','2013.9','2013.10','2013.11','2013.12'];
+// $(function () {
+//     var chart = new Highcharts.Chart({
+//         chart: {
+//             renderTo: 'container',
+//             type: 'line'
+//         },
+//         title: {
+//             text: 'Latest Crime Statistics '
+//         },
+var chart;
+$(function () {
+    chart = Highcharts.chart('container', {
+        title: {
+            text: 'Latest Crime Statistics',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: ',
+            x: -20
+        },
+        xAxis: {
+            categories: myXAxis,
+            labels: {
+                zIndex: 6
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'CrimeRate'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }],
+            labels: {
+                zIndex: 6
+            }
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' + this.x + ': ' + this.y + '°C';
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+       
+        series: myArray        
+    });
+});
+var chart = $('#container').highcharts(),
+        $button = $('#button');
+    $(function() {
+        var series = chart.series[0];
+        if (series.visible) {
+            $(chart.series).each(function(){
+                //this.hide();
+                this.setVisible(false, false);
+            });
+            chart.redraw();
+            $button.html('Show series');
+        } else {
+            $(chart.series).each(function(){
+                //this.show();
+                this.setVisible(true, false);
+            });
+            chart.redraw();
+            $button.html('Hide series');
+        }
+    });
+Highcharts.createElement('link', {
+   href: 'https://fonts.googleapis.com/css?family=Signika:400,700',
+   rel: 'stylesheet',
+   type: 'text/css'
+}, null, document.getElementsByTagName('head')[0]);
+
+
+// Add the background image to the container
+Highcharts.wrap(Highcharts.Chart.prototype, 'getContainer', function (proceed) {
+   proceed.call(this);
+   this.container.style.background = 'url(http://www.highcharts.com/samples/graphics/sand.png)';
+});
+
+
+</script>
