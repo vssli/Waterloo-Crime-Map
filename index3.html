@@ -47,9 +47,11 @@ body {font-family: "Lato", sans-serif}
   </head>
   <body>
   <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:100%" id="mapView">
+      
     <div class="w3-black" >
+      <input id="pac-input" class="controls" type="text" placeholder="Indicate a city">
       <div id="googleMap" style="height:660px;width:100%;position:relative;filter:grayscale(0%);-webkit-filter:grayscale(0%);"></div>
-      <script src="https://maps.googleapis.com/maps/api/js"></script>
+      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     </div>
 
     <div id="map-controls" class="w3-col m6 w3-small w3-margin-bottom" style="float:right;background-color:#f0f0f0;border:1px solid #dadada;width:150px;position:absolute;top:1000px;right:20px;padding:5px;">
@@ -114,7 +116,62 @@ function initialize() {
 };
 
 var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+var inputLocation = /** @type {HTMLInputElement} */(document.getElementById('pac-input'));
+	// Link it to the UI element.
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputLocation);
+	var autocompleteLocation = new google.maps.places.Autocomplete(inputLocation);
+	autocompleteLocation.bindTo('bounds', map);
+	 /******************** LISTENER ************************/
+	google.maps.event.addListener(autocompleteLocation, 'place_changed', function() {
+	inputLocation.className = '';
+	var placeStart = autocompleteLocation.getPlace();
+	if (!placeStart.geometry) {
+	  // Inform the user that the place was not found and return.
+	  inputLocation.className = 'notfound';
+	  return;
+	}
 
+	// If the place has a geometry, then present it on a map.
+	if (placeStart.geometry.viewport) {
+	  map.fitBounds(placeStart.geometry.viewport);
+	} else {
+	  map.setCenter(placeStart.geometry.location);
+	  map.setZoom(13);  // Why 13? Because it looks good.
+	}
+	var address = '';
+	if (placeStart.address_components) {
+	  address = [
+		(placeStart.address_components[0] && placeStart.address_components[0].short_name || ''),
+		(placeStart.address_components[1] && placeStart.address_components[1].short_name || ''),
+		(placeStart.address_components[2] && placeStart.address_components[2].short_name || '')
+	  ].join(' ');
+	}
+  });
+    google.maps.event.addListener(autocompleteLocation, 'place_changed', function() {
+	inputLocation.className = '';
+	var placeStart = autocompleteLocation.getPlace();
+	if (!placeStart.geometry) {
+	  // Inform the user that the place was not found and return.
+	  inputLocation.className = 'notfound';
+	  return;
+	}
+
+	// If the place has a geometry, then present it on a map.
+	if (placeStart.geometry.viewport) {
+	  map.fitBounds(placeStart.geometry.viewport);
+	} else {
+	  map.setCenter(placeStart.geometry.location);
+	  map.setZoom(13);  // Why 13? Because it looks good.
+	}
+	var address = '';
+	if (placeStart.address_components) {
+	  address = [
+		(placeStart.address_components[0] && placeStart.address_components[0].short_name || ''),
+		(placeStart.address_components[1] && placeStart.address_components[1].short_name || ''),
+		(placeStart.address_components[2] && placeStart.address_components[2].short_name || '')
+	  ].join(' ');
+	}
+  });
 
 var universityOfWaterlooCoords = [
       {lat: 43.470653, lng: -80.558243},
@@ -892,5 +949,8 @@ Highcharts.wrap(Highcharts.Chart.prototype, 'getContainer', function (proceed) {
 
 
 </script>
+    <script>
+      
+      </script>
 </body>
 </html>
