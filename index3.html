@@ -9,7 +9,7 @@
 
 <!-- animsition js -->
 <script src="css/jquery.animsition.min.js"></script>
-    
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link type="text/css"       href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -89,15 +89,15 @@ body {font-family: "Lato", sans-serif}
 
   </body>
   </html>
-  
+
 
 
 
   <!-- The Text View Section -->
-  
+
 
   <!-- The Contact Section -->
- 
+
 <!-- End Page Content -->
 
 
@@ -200,7 +200,7 @@ var clairhillsCoords = [
       {lat: 43.448527, lng: -80.572787},
       {lat: 43.447475, lng: -80.572261},
       {lat: 43.446315, lng: -80.571163},
-  ];    
+  ];
 var vistahillsCoords = [
       {lat: 43.450214, lng: -80.593382},
       {lat: 43.449303, lng: -80.591122},
@@ -219,7 +219,7 @@ var columbiaforestCoords = [
       {lat: 43.467910, lng: -80.589009},
       {lat: 43.463485, lng: -80.597660},
       {lat: 43.455691, lng: -80.590103},
-      {lat: 43.452739, lng: -80.596200},            
+      {lat: 43.452739, lng: -80.596200},
 ];
 var westvaleCoords = [
      {lat: 43.441870, lng: -80.584151},
@@ -577,7 +577,7 @@ var myContentDiv =
   //   '<p>Tab 3</p>',
   // '</div>',
   '</div>'
-].join(''); 
+].join('');
 
 for(i = 0; i < Coords.length; i++)
 {
@@ -592,18 +592,20 @@ for(i = 0; i < Coords.length; i++)
     myPolygon.setMap(map);
 
    var iw = new google.maps.InfoWindow();
-
+google.maps.event.addListener(myPolygon, 'click',function(event){
+    iw.setPosition(event.latLng);
+});
     google.maps.event.addListener(myPolygon, 'click', (function(event) {
     return function() {
       $.ajax({
           success: function(data) {
-            
+
      iw.setContent(myContentDiv);
-     iw.setPosition(event.latLng); 
-     iw.open(map);   
+     //iw.setPosition(event.latLng);
+     iw.open(map);
      $("#tabs").tabs();
      var myChart;
-    dataChart = { 
+    dataChart = {
               chart: {
                 borderWidth: 2,
                 renderTo: document.getElementById('line-container'),
@@ -709,11 +711,11 @@ for(i = 0; i < Coords.length; i++)
   })(event));
 
 
-    
+
 // }
 }
 }
- 
+
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
@@ -852,8 +854,8 @@ $(function () {
             verticalAlign: 'middle',
             borderWidth: 0
         },
-       
-        series: myArray        
+
+        series: myArray
     });
 });
 var chart = $('#container').highcharts(),
