@@ -346,6 +346,8 @@ input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:d
         font-weight: 300;
         text-overflow: ellipsis;
 		margin-left:30px;
+        margin-top: 12px;
+
       }
 
       #pac-input:focus {
@@ -354,6 +356,7 @@ input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:d
         padding-left: 14px;
         width: 401px;
 		margin-left:30px;
+		margin-top: 12px;
       }
 .controls {
         margin-top: 12px;
