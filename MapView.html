@@ -17,6 +17,12 @@
     <script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/w3.css">
+<!-- Bootstrap -->
+<link href="_include/css/bootstrap.min.css" rel="stylesheet">
+<!-- Main Style -->
+<link href="_include/css/main.css" rel="stylesheet">
+<!-- Shortcodes -->
+<link href="_include/css/shortcodes.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <style>
@@ -26,32 +32,32 @@ body {font-family: "Lato", sans-serif}
 <body>
 
 <!-- Navbar -->
-<div class="w3-top">
-<ul class="w3-navbar w3-black w3-card-2 w3-right-align">
-  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
-    <a class="w3-padding-large" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-  </li>
-  <li class="w3-hide-small w3-right"><a href="index3.html" class="w3-padding-large">Map View</a></li>
-  <li class="w3-hide-small w3-right"><a href="TextView.html" class="w3-padding-large">Text View</a></li>
-  <li class="w3-hide-small w3-right"><a href="Contact.html" class="w3-padding-large">Contact</a></li>
-</ul>
-</div>
+<header>
+    <div class="sticky-nav">
+    	<a id="mobile-nav" class="menu-nav" href="#menu-nav"></a>
+      <nav id="menu">
+        	<ul id="menu-nav">
+            	<li><a href="MapView.html" class="external">Map View</a></li>
+                <li><a href="TextView.html" class="external">Text View</a></li>
+                <li><a href="Contact.html" class="external">Contact</a></li>
+                <li><a href="Introduction.html" class="external">Introduction</a></li>
+            
+            </ul>
+        </nav>
+        
+    </div>
+</header>
 <!-- Page content -->
 
   <!-- The Map View Section -->
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <title>mapView
-    </title>
-  </head>
   <body>
-  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:100%" id="mapView">
+  <div class="w3-container w3-content w3-center w3-padding-10" style="max-width:100%" id="mapView">
     <div class="w3-black" >
       <div id="googleMap" style="height:660px;width:100%;position:relative;filter:grayscale(0%);-webkit-filter:grayscale(0%);"></div>
       <script src="https://maps.googleapis.com/maps/api/js"></script>
     </div>
 
+<!--
     <div id="map-controls" class="w3-col m6 w3-small w3-margin-bottom" style="float:right;background-color:#f0f0f0;border:1px solid #dadada;width:150px;position:absolute;top:1000px;right:20px;padding:5px;">
       <p align="left"><strong>Map info</strong></p>
       <div name="control-sections">
@@ -74,9 +80,10 @@ body {font-family: "Lato", sans-serif}
         </div>
       </div>
     </div>
+-->
 
 
-    <div id="map-key" class="w3-col m6 w3-small w3-margin-bottom" style="background-color:#f0f0f0;border:1px solid #dadada;width:150px;position:absolute;top:1000px;left:20px;padding:5px;">
+       <div id="map-key" class="w3-col m6 w3-small w3-margin-bottom" style="background-color:#f0f0f0;border:1px solid #dadada;width:150px;position:absolute;top:200px;left:20px;padding:5px;">
       <ul>
         <li name="high" style="float:left;display:block;margin:3px;margin-top:-5px;margin-left:-30px;"><span class="w3-col.s1" style="border-color:#9f6e5f;background-color:#d5694c;height:15px;width:15px;margin-right:2px;border:1px solid;padding-right:17px;"></span>High</li><br>
         <li name="aboveAverage" style="float:left;display:block;margin:3px;margin-left:-30px;"><span class="w3-col.s1" style="border-color:#b6825b;background-color:#ffa84b;height:15px;width:15px;margin-right:2px;border:1px solid;padding-right:17px;"></span>Above average</li><br>
@@ -88,15 +95,12 @@ body {font-family: "Lato", sans-serif}
   </div>
 
   </body>
-  </html>
 
 
 
 
-  <!-- The Text View Section -->
 
 
-  <!-- The Contact Section -->
 
 <!-- End Page Content -->
 
@@ -558,13 +562,14 @@ var kiwanisparkCoords = [
   {lat: 43.503229, lng: -80.481047},
   {lat: 43.501618, lng: -80.488214},
 ];
+
 var Coords = [universityOfWaterlooCoords,benchwoodCoords,upperbeechwoodCoords,beechwoodwestCoords,clairhillsCoords,vistahillsCoords,columbiaforestCoords,westvaleCoords,marplehillsCoords,westmountCoords,uptownwaterlooCoords,cityofwaterlooCoords,laurelwoodCoords,conservationmeadowsCoords,northlakeshoreCoords,lakeshoreCoords,colonialacresCoords,lincolnvillageCoords,lincolnheightsCoords,eastbridgeCoords,lexingtonCoords,universitydownsCoords,kiwanisparkCoords];
 var myPolygon, i;
 var myContentDiv =
 //    '<div id="line-container" style="height:350px; width:350px; color:#0000FF"></div>';
 ['<div id="tabs" class="tabs" style="color:#0000FF">',
-  '<ul><li><a href="#line-container">One</a></li>',
-    '<li><a href="#pie-container">Two</a></li>',
+  '<ul><li><a href="#line-container">Trending</a></li>',
+    '<li><a href="#pie-container">Classification</a></li>',
     // '<li><a href="#tab-3">Three</a></li>',
   '</ul>',
   '<div id="line-container" style="height:350px; width:350px; color:#0000FF"></div>',
@@ -616,20 +621,19 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
                 marginRight:40
               },
               title: {
-                text: 'Monthly Average Temperature',
+                text: 'Annual Crime Trends',
                 x: -20 //center
               },
               subtitle: {
-                text: 'Source: WorldClimate.com',
+                text: 'Source: Waterloo Regional Police Service',
                 x: -20
               },
               xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: ['2011','2012','2013','2014']
               },
               yAxis: {
                 title: {
-                  text: 'Temperature (°C)'
+                  text: 'Cases'
                 },
                 plotLines: [{
                   value: 0,
@@ -638,7 +642,7 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
                 }]
               },
               tooltip: {
-                valueSuffix: '°C'
+                valueSuffix: ' Cases'
               },
               legend: {
                 layout: 'vertical',
@@ -647,8 +651,8 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
                 borderWidth: 0
               },
               series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                name: ' ',
+                data: [7.0, 6.9, 9.5, 14.5]
               }]
             }
     myChart = new Highcharts.Chart(dataChart);
@@ -660,7 +664,7 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
             type: 'pie'
         },
         title: {
-            text: 'Browser market shares January, 2015 to May, 2015'
+            text: 'Crime Type Statistics'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -682,25 +686,25 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
             name: 'Brands',
             colorByPoint: true,
             data: [{
-                name: 'Microsoft Internet Explorer',
+                name: 'Theft',
                 y: 56.33
             }, {
-                name: 'Chrome',
+                name: 'Car Accident',
                 y: 24.03,
                 sliced: true,
                 selected: true
             }, {
-                name: 'Firefox',
+                name: 'Robbery',
                 y: 10.38
-            }, {
-                name: 'Safari',
-                y: 4.77
-            }, {
-                name: 'Opera',
+            },  {
+                name: 'Rape',
                 y: 0.91
             }, {
-                name: 'Proprietary or Undetectable',
+                name: 'Murder',
                 y: 0.2
+            },{
+                name: 'Other',
+                y: 8.15
             }]
         }]
     });
@@ -720,7 +724,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 <!-- Footer -->
-<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-DarkSlateGrey w3-xlarge">
   <a href="#" class="w3-hover-text-indigo"><i class="fa fa-facebook-official"></i></a>
   <a href="#" class="w3-hover-text-red"><i class="fa fa-pinterest-p"></i></a>
   <a href="#" class="w3-hover-text-light-blue"><i class="fa fa-twitter"></i></a>
@@ -764,33 +768,10 @@ window.onclick = function(event) {
   }
 }
 </script>
-
-<script>
-
+<!--
 var myMap = new Map();
-myMap.set('tokyo',[7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5]);
-myMap.set('New York',[-0.2, 0.8, 5.7, 11.3]);
-myMap.set('Berlin',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('London',[3.9, 4.2, 5.7, 8.5]);
-myMap.set('Waterloo',[3.0,3.0,3.0,3.0]);
-
-myMap.set('Berlin1',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin2',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin3',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin4',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin5',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin6',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin7',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin8',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin9',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin0',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin11',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin12',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin13',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin14',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin15',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin',[-0.9, 0.6, 3.5, 8.4]);
-
+myMap.set('Total',[24076],[22414],[25735],[24319],[25415],[26048],[26123],[26228],[26675],[25972],[23801],[22230]);
+    
 var myArray = new Array();
 
 $(function()
@@ -803,7 +784,11 @@ $(function()
           });
           console.log(myArray.toString());
         });
-var myXAxis = ['2011.1','2011.2','2011.3','2011.4','2011.5','2011.6','2011.7','2011.8','2011.9','2011.10','2011.11','2011.12','2012.1','2012.2','2012.3','20112.4','2012.5','2012.6','2012.7','2012.8','2012.9','2012.10','2012.11','2012.12','2013.1','2013.2','2013.3','2013.4','2013.5','2013.6','2013.7','2013.8','2013.9','2013.10','2013.11','2013.12'];
+var myXAxis = ['2011.1','2011.2','2011.3','2011.4','2011.5','2011.6','2011.7','2011.8','2011.9','2011.10','2011.11','2011.12','2012.1','2012.2','2012.3','20112.4','2012.5','2012.6','2012.7','2012.8','2012.9','2012.10','2012.11','2012.12','2013.1','2013.2','2013.3','2013.4','2013.5','2013.6','2013.7','2013.8','2013.9','2013.10','2013.11','2013.12'，'2014.1','2014.2','2014.3','2014.4','2014.5','2014.6','2014.7','2014.8','2014.9','2014.10','2014.11','2014.12'];
+-->
+<script>
+
+
 // $(function () {
 //     var chart = new Highcharts.Chart({
 //         chart: {

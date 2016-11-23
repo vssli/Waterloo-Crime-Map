@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <title>K-W Crime Map</title>
     <!-- animsition CSS -->
@@ -9,13 +9,20 @@
 
 <!-- animsition js -->
 <script src="css/jquery.animsition.min.js"></script>
-    
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link type="text/css"       href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
+    <script src="http://github.highcharts.com/master/highcharts.js"></script>
+    <script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/w3.css">
+<!-- Bootstrap -->
+<link href="_include/css/bootstrap.min.css" rel="stylesheet">
+<!-- Main Style -->
+<link href="_include/css/main.css" rel="stylesheet">
+<!-- Shortcodes -->
+<link href="_include/css/shortcodes.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <style>
@@ -23,18 +30,30 @@ body {font-family: "Lato", sans-serif}
 .mySlides {display: none}
 </style>
 <body>
-    <div class="w3-top">
-<ul class="w3-navbar w3-black w3-card-2 w3-right-align">
-  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
-    <a class="w3-padding-large" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-  </li>
-  <li class="w3-hide-small w3-right"><a href="index3.html" class="w3-padding-large">Map View</a></li>
-  <li class="w3-hide-small w3-right"><a href="TextView.html" class="w3-padding-large">Text View</a></li>
-  <li class="w3-hide-small w3-right"><a href="Contact.html" class="w3-padding-large">Contact</a></li>
-</ul>
-</div>
-    <div class="w3-white" id="contact" style="max-height:500px">
-    <div class="w3-container w3-content w3-padding-64 " style="max-width:800px">
+
+<!-- Navbar -->
+<header>
+    <div class="sticky-nav">
+    	<a id="mobile-nav" class="menu-nav" href="#menu-nav"></a>
+        
+        
+        
+        <nav id="menu">
+        	<ul id="menu-nav">
+            	<li><a href="MapView.html" class="external">Map View</a></li>
+                <li><a href="TextView.html" class="external">Text View</a></li>
+                <li><a href="Contact.html" class="external">Contact</a></li>
+                <li><a href="Introduction.html" class="external">Introduction</a></li>
+            
+            </ul>
+        </nav>
+        
+    </div>
+</header>
+<!-- Page content -->
+<!-- The Contact Section -->
+  <div class="w3-DarkSlateGrey " id="contact" style="max-height:500px">
+    <div class="w3-container w3-content w3-padding-64 " style="max-width:900px">
       <h2 class="w3-wide w3-center">CONTACT</h2>
       <p class="w3-opacity w3-center"><i>Our Team</i></p>
       <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
