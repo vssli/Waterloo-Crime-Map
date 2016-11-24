@@ -1,0 +1,44 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/animsition.min.css">
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<script src="css/jquery.animsition.min.js"></script>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link type="text/css"       href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+</head>
+<body>
+    <div id="result"></div>
+<script>
+$(document).ready(function(){ 
+$.ajax({ 
+type:"GET", 
+url:"jsp/crime_level.jsp", 
+dataType:"json", 
+success:function(data){ 
+    var myjson; 
+//i表示在data中的索引位置，n表示包含的信息的对象 
+$.each(data,function(i,n){ 
+//获取对象中属性为optionsValue的值 
+    delete n["_id"];
+    myjson = $.extend({},myjson,n);
+}); 
+//myjson = eval('('+JSON.stringify(myjson).replace("}，{",',')+')');
+$('#result').append(JSON.stringify(myjson)); 
+}
+});
+return false; 
+}); 
+</script>
+</body>
+</html>

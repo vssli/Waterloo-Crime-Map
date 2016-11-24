@@ -70,7 +70,6 @@ body {font-family: "Lato", sans-serif}
 
 
 
-
   <!-- The Text View Section -->
 
 
@@ -80,9 +79,66 @@ body {font-family: "Lato", sans-serif}
 
 
 <script>
+    var myname;
+    var AreaOrder;
+    var i;
+var crime_level; 
+var crime_by_month;
+var crime_by_year;
+var crime_by_type;
 var myCenter = new google.maps.LatLng(43.4587, -80.5129);
+var map;
+var colors = {5:'#d5694c',4:'#ffa84b',3:'#f7ed4d',2:'#93d6f1',1:'#8288e6'};
 
-function initialize() {
+$.ajax({ 
+type:"GET", 
+url:"jsp/crime_level.jsp", 
+dataType:"json", 
+success:function(data){ 
+//i表示在data中的索引位置，n表示包含的信息的对象 
+$.each(data,function(i,n){ 
+//获取对象中属性为optionsValue的值 
+    delete n["_id"];
+    crime_level = $.extend({},crime_level,n);
+}); 
+}
+});
+
+$.ajax({ 
+type:"GET", 
+url:"jsp/crime_by_year.jsp", 
+dataType:"json", 
+success:function(data){ 
+//i表示在data中的索引位置，n表示包含的信息的对象 
+$.each(data,function(i,n){ 
+//获取对象中属性为optionsValue的值 
+    delete n["_id"];
+    crime_by_month = $.extend({},crime_by_month,n);
+}); 
+    crime_by_year = crime_by_month;
+    for(var el in crime_by_year)
+    {
+        var my2011 = sum(crime_by_year[el][2011]);
+        var my2012 = sum(crime_by_year[el][2012]);
+        var my2013 = sum(crime_by_year[el][2013]);
+        var my2014 = sum(crime_by_year[el][2014]);
+        crime_by_year[el] = new Array(my2011,my2012,my2013,my2014);
+    }
+}
+});
+    function sum(obj)
+    {
+        var sum = 0;
+        for(var el in obj)
+        {
+        if( obj.hasOwnProperty( el ) ) {
+        sum +=  obj[el] ;
+        }
+        }
+        return sum;
+    }
+    
+    function initialize() {
     var mapProp = {
     center: myCenter,
     zoom: 12,
@@ -91,7 +147,7 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.ROADMAP
 };
 
-var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 var inputLocation = /** @type {HTMLInputElement} */(document.getElementById('pac-input'));
 	// Link it to the UI element.
 	map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputLocation);
@@ -148,6 +204,9 @@ var inputLocation = /** @type {HTMLInputElement} */(document.getElementById('pac
 	  ].join(' ');
 	}
   });
+
+
+
 
 var universityOfWaterlooCoords = [
       {lat: 43.470653, lng: -80.558243},
@@ -592,7 +651,8 @@ var kiwanisparkCoords = [
   {lat: 43.501618, lng: -80.488214},
 ];
 var Coords = [universityOfWaterlooCoords,benchwoodCoords,upperbeechwoodCoords,beechwoodwestCoords,clairhillsCoords,vistahillsCoords,columbiaforestCoords,westvaleCoords,marplehillsCoords,westmountCoords,uptownwaterlooCoords,cityofwaterlooCoords,laurelwoodCoords,conservationmeadowsCoords,northlakeshoreCoords,lakeshoreCoords,colonialacresCoords,lincolnvillageCoords,lincolnheightsCoords,eastbridgeCoords,lexingtonCoords,universitydownsCoords,kiwanisparkCoords];
-var myPolygon, i;
+AreaOrder = {0:"universityOfWaterloo",1:"benchwood",2:"upperbeechwood",3:"beechwoodwest",4:"clairhills",5:"vistahills",6:"columbiaforest",7:"westvale",8:"marplehills",9:"westmount",10:"uptownwaterloo",11:"cityofwaterloo",12:"laurelwood",13:"conservationmeadows",14:"northlakeshore",15:"lakeshore",16:"colonialacres",17:"lincolnvillage",18:"lincolnheights",19:"eastbridge",20:"lexington",21:"universitydowns",22:"kiwanispark"};
+var myPolygon;
 var myContentDiv =
 //    '<div id="line-container" style="height:350px; width:350px; color:#0000FF"></div>';
 ['<div id="tabs" class="tabs" style="color:#0000FF">',
@@ -611,25 +671,27 @@ var myContentDiv =
   // '</div>',
   '</div>'
 ].join('');
-
 for(i = 0; i < Coords.length; i++)
 {
+    var polygonName = AreaOrder[i];
+    var mycolor = colors[crime_level[polygonName]];
   myPolygon = new google.maps.Polygon({
     paths:Coords[i],
     strokeColor: '#000000',
     strokeOpacity: 0.2,
     strokeWeight: 2,
-    fillColor: '#93d6f1',
+    fillColor: mycolor,
     fillOpacity: 0.35
   });
+    myPolygon.name = polygonName;
     myPolygon.setMap(map);
 
    var iw = new google.maps.InfoWindow();
 google.maps.event.addListener(myPolygon, 'click',function(event){
     iw.setPosition(event.latLng);
 });
-    google.maps.event.addListener(myPolygon, 'click', (function(event) {
-    return function() {
+    google.maps.event.addListener(myPolygon, 'click', function(event) {
+         myname = this.name;
       $.ajax({
           success: function(data) {
 
@@ -637,6 +699,7 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
      //iw.setPosition(event.latLng);
      iw.open(map);
      $("#tabs").tabs();
+              console.log(myname);
      var myChart;
     dataChart = {
               chart: {
@@ -649,20 +712,19 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
                 marginRight:40
               },
               title: {
-                text: 'Monthly Average Temperature',
+                text: 'Annual Crime Trends',
                 x: -20 //center
               },
               subtitle: {
-                text: 'Source: WorldClimate.com',
+                text: 'Source: Waterloo Regional Police Service',
                 x: -20
               },
               xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: ['2011','2012','2013','2014']
               },
               yAxis: {
                 title: {
-                  text: 'Temperature (°C)'
+                  text: 'Cases'
                 },
                 plotLines: [{
                   value: 0,
@@ -671,7 +733,7 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
                 }]
               },
               tooltip: {
-                valueSuffix: '°C'
+                valueSuffix: ' Cases'
               },
               legend: {
                 layout: 'vertical',
@@ -680,8 +742,8 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
                 borderWidth: 0
               },
               series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                name: ' ',
+                data: crime_by_year[myname]
               }]
             }
     myChart = new Highcharts.Chart(dataChart);
@@ -740,16 +802,17 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
      }
   });
       return false;
-    }
-  })(event));
+    });
 
-
+}
 
 // }
 }
-}
+    google.maps.event.addDomListener(window, 'load', initialize);
+//crime_level = eval('('+JSON.stringify(crime_level).replace("}，{",',')+')');
+//$('#result').append(JSON.stringify(crime_level)); 
 
-google.maps.event.addDomListener(window, 'load', initialize);
+
 </script>
 
 <!-- Footer -->
