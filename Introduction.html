@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<title>K-W Crime Map</title>
+    <!-- animsition CSS -->
+<link rel="stylesheet" href="css/animsition.min.css">
+
+<!-- vendor js -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<!-- animsition js -->
+<script src="css/jquery.animsition.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link type="text/css"       href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="http://github.highcharts.com/master/highcharts.js"></script>
+    <script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/w3.css">
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- Main Style -->
+<link href="css/main.css" rel="stylesheet">
+<!-- Shortcodes -->
+<link href="css/shortcodes.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<!-- font-->
+<link href="https://fonts.googleapis.com/css?family=Special+Elite|Bungee+Shade|Nosifer" rel="stylesheet">
+
+
+<style>
+body {background-image: url(Clown.jpg);
+    background-repeat:no-repeat;}
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+    
+/*.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup 
+.popup .popuptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: 80px;
+}
+
+/* Popup arrow 
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup 
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) 
+@-webkit-keyframes fadeIn {
+    from {opacity: 0.9;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}*/
+</style>
+<body>
+
+<!-- Navbar -->
+<header>
+    <div class="sticky-nav">
+    	<a id="mobile-nav" class="menu-nav" href="#menu-nav"></a>
+        <nav id="menu">
+        	<ul id="menu-nav">
+            	<li><a href="index3.html" class="external">Map View</a></li>
+                <li><a href="TextView.html" class="external">Text View</a></li>
+                <li><a href="Contact.html" class="external">Contact</a></li>
+                <li><a href="Introduction.html" class="external">Introduction</a></li>
+            
+            </ul>
+        </nav>
+        
+    </div>
+</header>
+<!-- Page content -->  <!-- 
+<div id="shortcodes" class="page"> -->
+    <div class="container">
+
+    
+        <!-- Title Page -->
+            <div class="span ">
+                <div class="title-page">
+                    <h2 class="title">Our Features</h2>
+                    <h3 class="title-description">What can we do with the map</h3>
+                </div>
+            </div>
+        <!-- End Title Page -->
+<!--
+        <div class="popup" onclick="myFunction()">Click me!
+  <span class="popuptext" id="myPopup">Popup text...</span>
+</div>-->
+        
+        <!-- Start Accordion/Toggle Section -->
+        <div class="row">
+            <div class="span8">
+
+                <h3 class="spec8">Segment</h3>
+                <!-- Start Accordion -->
+                <div class="accordion" id="accordionArea">
+                    <div class="accordion-group">
+                        <div class="accordion-heading accordionize">
+<!--
+                        <div class="popup" onclick="myFunction()">
+                    12121212
+-->
+                            <a class="accordion-toggle" data-parent="#accordionArea" href="#oneArea">
+                                Segment the map into administrative regions 
+                                <span class="font-icon-arrow-simple-down"></span>
+<!--
+                                <span class="popuptext" id="myPopup">
+                                 <img src="segment.png" style="width:100%" ></span>
+-->
+                            </a>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            
+        
+            <div class="span8">
+                <h3 class="spec8">Trend</h3>
+                <!-- Start Accordion -->
+                <div class="accordion" id="accordionArea">
+                    <div class="accordion-group">
+                        <div class="accordion-heading accordionize">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea" href="#oneArea">
+                                Show detailed information like crime trends
+                                <span class="font-icon-arrow-simple-down"></span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span8">
+                <h3 class="spec8">Level</h3>
+                <!-- Start Accordion -->
+                <div class="accordion" id="accordionArea">
+                    <div class="accordion-group">
+                        <div class="accordion-heading accordionize">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea" href="#oneArea">
+                                Color the map by level of crime
+                                <span class="font-icon-arrow-simple-down"></span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <div class="span8">
+                <h3 class="spec8">Type</h3>
+                <!-- Start Accordion -->
+                <div class="accordion" id="accordionArea">
+                    <div class="accordion-group">
+                        <div class="accordion-heading accordionize">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea" href="#oneArea">Classify the crimes of a district into particular types
+                                <span class="font-icon-arrow-simple-down"></span>
+                            </a>
+                        </div>
+                    </div>       
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+<!--
+<script>
+// When the user clicks on div, open the popup
+function myFunction() {
+    var popup = document.getElementById('myPopup');
+    popup.classList.toggle('show');
+}
+</script>
+-->
+
+    </body>
+</html>

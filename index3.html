@@ -34,6 +34,7 @@ body {font-family: "Lato", sans-serif}
   <li class="w3-hide-small w3-right"><a href="index3.html" class="w3-padding-large">Map View</a></li>
   <li class="w3-hide-small w3-right"><a href="TextView.html" class="w3-padding-large">Text View</a></li>
   <li class="w3-hide-small w3-right"><a href="Contact.html" class="w3-padding-large">Contact</a></li>
+     <li class="w3-hide-small w3-right"><a href="Introduction.html" class="w3-padding-large">Introduction</a></li>
 </ul>
 </div>
 <!-- Page content -->
@@ -51,7 +52,7 @@ body {font-family: "Lato", sans-serif}
     <div class="w3-black" >
       <input id="pac-input" class="controls" type="text" placeholder="Enter your location">
       <div id="googleMap" style="height:660px;width:100%;position:relative;filter:grayscale(0%);-webkit-filter:grayscale(0%);"></div>
-      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhTmtFoEIXi2CZJCZiExkSNF48TPC4vkk&libraries=places&sensor=false"></script>
     </div>
 
     <div id="map-key" class="w3-col m6 w3-small w3-margin-bottom" style="background-color:#f0f0f0;border:1px solid #dadada;width:150px;position:absolute;top:200px;left:20px;padding:5px;">
@@ -79,6 +80,7 @@ body {font-family: "Lato", sans-serif}
 
 
 <script>
+    var places;
     var myname;
     var AreaOrder;
     var i;
@@ -88,8 +90,9 @@ var crime_by_year;
 var crime_by_type;
 var myCenter = new google.maps.LatLng(43.4587, -80.5129);
 var map;
+var myPolygons = [];
 var colors = {5:'#d5694c',4:'#ffa84b',3:'#f7ed4d',2:'#93d6f1',1:'#8288e6'};
-
+var crime_type_obj = new Object();
 $.ajax({ 
 type:"GET", 
 url:"jsp/crime_level.jsp", 
@@ -115,6 +118,7 @@ $.each(data,function(i,n){
     delete n["_id"];
     crime_by_month = $.extend({},crime_by_month,n);
 }); 
+
     crime_by_year = crime_by_month;
     for(var el in crime_by_year)
     {
@@ -123,6 +127,45 @@ $.each(data,function(i,n){
         var my2013 = sum(crime_by_year[el][2013]);
         var my2014 = sum(crime_by_year[el][2014]);
         crime_by_year[el] = new Array(my2011,my2012,my2013,my2014);
+    }
+}
+});
+$.ajax({
+type:"GET",
+url:"jsp/crime_by_type.jsp",
+dataType:"json",
+success:function(data){
+    $.each(data,function(i,n){ 
+//获取对象中属性为optionsValue的值 
+    delete n["_id"];
+    crime_by_type = $.extend({},crime_by_type,n);
+}); 
+    for(var el in crime_by_type)
+    {
+         var physic_offence = ((crime_by_type[el]["INJURED_SICK_PERSON"]!==undefined)?((crime_by_type[el]["INJURED_SICK_PERSON"][2014]!=undefined)?crime_by_type[el]["INJURED_SICK_PERSON"][2014]:0):0) + ((crime_by_type[el]["ASSAULT"]!==undefined)?((crime_by_type[el]["ASSAULT"][2014]!==undefined)?crime_by_type[el]["ASSAULT"][2014]:0):0) + ((crime_by_type[el]["INTOXICATED_PERSON"]!==undefined)?((crime_by_type[el]["INTOXICATED_PERSON"][2014]!==undefined)?crime_by_type[el]["INTOXICATED_PERSON"][2014]:0):0) + ((crime_by_type[el]["LIQUOR_OFFENCE"]!==undefined)?((crime_by_type[el]["LIQUOR_OFFENCE"][2014]!==undefined)?crime_by_type[el]["LIQUOR_OFFENCE"][2014]:0):0) + ((crime_by_type[el]["CHILD_CUSTODY_AND_ACCESS"]!==undefined)?((crime_by_type[el]["CHILD_CUSTODY_AND_ACCESS"][2014]!==undefined)?crime_by_type[el]["CHILD_CUSTODY_AND_ACCESS"][2014]:0):0) + ((crime_by_type[el]["YOUNTH__UNDER_18__COMPLAINT"]!==undefined)?((crime_by_type[el]["YOUNTH__UNDER_18__COMPLAINT"][2014]!==undefined)?crime_by_type[el]["YOUNTH__UNDER_18__COMPLAINT"][2014]:0):0);
+        
+        var property_loss = ((crime_by_type[el]["PROPERTY_DAMAGE"]!==undefined)?((crime_by_type[el]["PROPERTY_DAMAGE"][2014]!==undefined)?crime_by_type[el]["PROPERTY_DAMAGE"][2014]:0):0) + ((crime_by_type[el]["PROP___LOST_AND_FOUND"]!==undefined)?((crime_by_type[el]["PROP___LOST_AND_FOUND"][2014]!==undefined)?crime_by_type[el]["PROP___LOST_AND_FOUND"][2014]:0):0);
+        
+        var robbery = ((crime_by_type[el]["ROBBERY"]!==undefined)?((crime_by_type[el]["ROBBERY"][2014]!==undefined)?crime_by_type[el]["ROBBERY"][2014]:0):0);
+        
+        var carAccident = ((crime_by_type[el]["ABANDONED_VEHICLE"]!==undefined)?((crime_by_type[el]["ABANDONED_VEHICLE"][2014]!==undefined)?crime_by_type[el]["ABANDONED_VEHICLE"][2014]:0):0) + ((crime_by_type[el]["SUSPICIOUS_VEHICLE"]!==undefined)?((crime_by_type[el]["SUSPICIOUS_VEHICLE"][2014]!==undefined)?crime_by_type[el]["SUSPICIOUS_VEHICLE"][2014]:0):0) + ((crime_by_type[el]["VEHICLE_STOP"]!==undefined)?((crime_by_type[el]["VEHICLE_STOP"][2014]!==undefined)?crime_by_type[el]["VEHICLE_STOP"][2014]:0):0) + ((crime_by_type[el]["VEHICLE___PLATE_SEIZURE"]!==undefined)?((crime_by_type[el]["VEHICLE___PLATE_SEIZURE"][2014]!==undefined)?crime_by_type[el]["VEHICLE___PLATE_SEIZURE"][2014]:0):0) + ((crime_by_type[el]["SELECTIVE_TRAFFIC_ENFORCEME-NT_PROGRAM__STEP"]!=undefined)?((crime_by_type[el]["SELECTIVE_TRAFFIC_ENFORCEME-NT_PROGRAM__STEP"][2014]!==undefined)?crime_by_type[el]["SELECTIVE_TRAFFIC_ENFORCEME-NT_PROGRAM__STEP"][2014]:0):0) + ((crime_by_type[el]["TRAFFIC___OTHER"]!==undefined)?((crime_by_type[el]["TRAFFIC___OTHER"][2014]!==undefined)?crime_by_type[el]["TRAFFIC___OTHER"][2014]:0):0) + ((crime_by_type[el]["MVC_HIT_AND_RUN"]!==undefined)?((crime_by_type[el]["MVC_HIT_AND_RUN"][2014]!==undefined)?crime_by_type[el]["MVC_HIT_AND_RUN"][2014]:0):0) + ((crime_by_type[el]["MVC_PERSONAL_INJURY"]!==undefined)?((crime_by_type[el]["MVC_PERSONAL_INJURY"][2014]!==undefined)?crime_by_type[el]["MVC_PERSONAL_INJURY"][2014]:0):0) + ((crime_by_type[el]["MVC_PROP__DAMAGE"]!==undefined)?((crime_by_type[el]["MVC_PROP__DAMAGE"][2014]!==undefined)?crime_by_type[el]["MVC_PROP__DAMAGE"][2014]:0):0) + ((crime_by_type[el]["MVC_FATALITY"]!==undefined)?((crime_by_type[el]["MVC_FATALITY"][2014]!==undefined)?crime_by_type[el]["MVC_FATALITY"][2014]:0):0) + ((crime_by_type[el]["DRIVING_COMPLAINT"]!==undefined)?((crime_by_type[el]["DRIVING_COMPLAINT"][2014]!==undefined)?crime_by_type[el]["DRIVING_COMPLAINT"][2014]:0):0);
+        
+        var theft = ((crime_by_type[el]["THEFT_UNDER__5000"]!==undefined)?((crime_by_type[el]["THEFT_UNDER__5000"][2014]!==undefined)?crime_by_type[el]["THEFT_UNDER__5000"][2014]:0):0) + ((crime_by_type[el]["THEFT_MOTOR"]!==undefined)?((crime_by_type[el]["THEFT_MOTOR"][2014]!==undefined)?crime_by_type[el]["THEFT_MOTOR"][2014]:0):0);
+        
+        var sex_offence = ((crime_by_type[el]["SEX_OFFENCE"]!==undefined)?((crime_by_type[el]["SEX_OFFENCE"][2014]!==undefined)?crime_by_type[el]["SEX_OFFENCE"][2014]:0):0) + ((crime_by_type[el]["PORNOGRAPHY"]!==undefined)?((crime_by_type[el]["PORNOGRAPHY"][2014]!==undefined)?crime_by_type[el]["PORNOGRAPHY"][2014]:0):0);
+        
+        var fraud = ((crime_by_type[el]["FRAUD___PERSONAL"]!==undefined)?((crime_by_type[el]["FRAUD___PERSONAL"][2014]!==undefined)?crime_by_type[el]["FRAUD___PERSONAL"][2014]:0):0) + ((crime_by_type[el]["FRAUD___GENERAL"]!==undefined)?((crime_by_type[el]["FRAUD___GENERAL"][2014]!==undefined)?crime_by_type[el]["FRAUD___GENERAL"][2014]:0):0) + ((crime_by_type[el]["FRAUD___FINANCIAL_INSTITUTION"]!==undefined)?((crime_by_type[el]["FRAUD___FINANCIAL_INSTITUTION"][2014]!==undefined)?crime_by_type[el]["FRAUD___FINANCIAL_INSTITUTION"][2014]:0):0);
+        var this_sum = crime_by_year[el][3];
+        var someObject = new Object();
+        physic_offence = physic_offence * 100 / this_sum ;
+        property_loss = property_loss * 100 / this_sum;
+        robbery = robbery * 100 / this_sum;
+        carAccident = carAccident * 100 / this_sum;
+        theft = theft * 100 / this_sum;
+        sex_offence = sex_offence * 100 / this_sum;
+        fraud = fraud * 100 / this_sum;
+        others = 100 - physic_offence - property_loss - robbery - carAccident - theft - sex_offence - fraud;
+        crime_type_obj[el] =  new Array(physic_offence,property_loss,robbery,carAccident,theft,sex_offence,fraud, others);
     }
 }
 });
@@ -148,62 +191,9 @@ $.each(data,function(i,n){
 };
 
 map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-var inputLocation = /** @type {HTMLInputElement} */(document.getElementById('pac-input'));
-	// Link it to the UI element.
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputLocation);
-	var autocompleteLocation = new google.maps.places.Autocomplete(inputLocation);
-	autocompleteLocation.bindTo('bounds', map);
+
 	 /******************** LISTENER ************************/
-	google.maps.event.addListener(autocompleteLocation, 'place_changed', function() {
-	inputLocation.className = '';
-	var placeStart = autocompleteLocation.getPlace();
-	if (!placeStart.geometry) {
-	  // Inform the user that the place was not found and return.
-	  inputLocation.className = 'notfound';
-	  return;
-	}
-
-	// If the place has a geometry, then present it on a map.
-	if (placeStart.geometry.viewport) {
-	  map.fitBounds(placeStart.geometry.viewport);
-	} else {
-	  map.setCenter(placeStart.geometry.location);
-	  map.setZoom(13);  // Why 13? Because it looks good.
-	}
-	var address = '';
-	if (placeStart.address_components) {
-	  address = [
-		(placeStart.address_components[0] && placeStart.address_components[0].short_name || ''),
-		(placeStart.address_components[1] && placeStart.address_components[1].short_name || ''),
-		(placeStart.address_components[2] && placeStart.address_components[2].short_name || '')
-	  ].join(' ');
-	}
-  });
-    google.maps.event.addListener(autocompleteLocation, 'place_changed', function() {
-	inputLocation.className = '';
-	var placeStart = autocompleteLocation.getPlace();
-	if (!placeStart.geometry) {
-	  // Inform the user that the place was not found and return.
-	  inputLocation.className = 'notfound';
-	  return;
-	}
-
-	// If the place has a geometry, then present it on a map.
-	if (placeStart.geometry.viewport) {
-	  map.fitBounds(placeStart.geometry.viewport);
-	} else {
-	  map.setCenter(placeStart.geometry.location);
-	  map.setZoom(13);  // Why 13? Because it looks good.
-	}
-	var address = '';
-	if (placeStart.address_components) {
-	  address = [
-		(placeStart.address_components[0] && placeStart.address_components[0].short_name || ''),
-		(placeStart.address_components[1] && placeStart.address_components[1].short_name || ''),
-		(placeStart.address_components[2] && placeStart.address_components[2].short_name || '')
-	  ].join(' ');
-	}
-  });
+	
 
 
 
@@ -656,8 +646,8 @@ var myPolygon;
 var myContentDiv =
 //    '<div id="line-container" style="height:350px; width:350px; color:#0000FF"></div>';
 ['<div id="tabs" class="tabs" style="color:#0000FF">',
-  '<ul><li><a href="#line-container">One</a></li>',
-    '<li><a href="#pie-container">Two</a></li>',
+  '<ul><li><a href="#line-container">Trending</a></li>',
+    '<li><a href="#pie-container">Crime Type</a></li>',
     // '<li><a href="#tab-3">Three</a></li>',
   '</ul>',
   '<div id="line-container" style="height:500px; width:500px; color:#0000FF"></div>',
@@ -685,15 +675,19 @@ for(i = 0; i < Coords.length; i++)
   });
     myPolygon.name = polygonName;
     myPolygon.setMap(map);
-
+    myPolygons.push(myPolygon);
    var iw = new google.maps.InfoWindow();
 google.maps.event.addListener(myPolygon, 'click',function(event){
     iw.setPosition(event.latLng);
 });
      google.maps.event.addListener(map, 'click', function() {
     iw.close();
-        map.animateCamera(CameraUpdateFactory.zoomBy(12.0,myCenter));
+    map.panTo(myCenter);
   });
+    google.maps.event.addListener(iw,'closeclick',function(){
+   map.panTo(myCenter); //removes the marker
+   // then, remove the infowindows name from the array
+});
     google.maps.event.addListener(myPolygon, 'click', function(event) {
          myname = this.name;
       $.ajax({
@@ -711,8 +705,8 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
                 renderTo: document.getElementById('line-container'),
                 zoomType: 'x',
                 type:"spline",
-                height:350,
-                width:350,
+                height:500,
+                width:500,
                 marginRight:40
               },
               title: {
@@ -781,28 +775,31 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
             name: 'takes part',
             colorByPoint: true,
             data: [{
-                name: 'Theft',
-                y: 56.33
+                name: 'Physical offence',
+                y: crime_type_obj[myname][0]
             }, {
-                name: 'Car Accident',
-                y: 24.03,
+                name: 'Property loss',
+                y: crime_type_obj[myname][1],
                 sliced: true,
                 selected: true
-            }, {
-                name: 'Physical offence',
-                y: 10.38
             },  {
-                name: 'Property loss',
-                y: 0.91
+                name: 'Robbery',
+                y: crime_type_obj[myname][2]
             }, {
-                name: 'Sex offence',
-                y: 0.2
+                name: 'Car Accident',
+                y: crime_type_obj[myname][3]
+            },{
+                name: 'Theft',
+                y: crime_type_obj[myname][4]
+            },{
+                name: 'SexOffence',
+                y: crime_type_obj[myname][5]
             },{
                 name: 'Fraud',
-                y: 8.15
+                y: crime_type_obj[myname][6]
             },{
-                name: 'Robbery',
-                y: 3.20
+                name: 'Others',
+                y: crime_type_obj[myname][7]
             }]
         }]
     });
@@ -812,7 +809,51 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
     });
 
 }
+        
+        var inputLocation = (document.getElementById('pac-input'));
+        var markers = [];
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputLocation);
+    var searchBox = new google.maps.places.SearchBox((inputLocation));
+google.maps.event.addListener(searchBox, 'places_changed', function() {
+    //alert("fuck");
+	         places = searchBox.getPlaces();
+    for (var i = 0, marker; marker = markers[i]; i++) {
+            marker.setMap(null);
+        }
+    markers = [];
+        //var bounds = new google.maps.LatLngBounds();
 
+        for (var i = 0, place; place = places[i]; i++) {
+
+            // Create a marker for each place.
+            var marker = new google.maps.Marker({
+                map: map,
+                title: place.name,
+                position: place.geometry.location
+            });
+
+            markers.push(marker);
+
+            //bounds.extend(place.geometry.location);
+        }
+
+        //map.fitBounds(bounds);
+            for( i in myPolygons)
+                {
+            if(google.maps.geometry.poly.containsLocation(marker.position,myPolygons[i]))
+                        {
+                            //alert("get");
+                            var mev = {
+                            stop: null,
+                            latLng: marker.position
+                            }
+                            google.maps.event.trigger(myPolygons[i], 'click',mev);
+                            break;
+                        }
+                }
+	
+  });
+    
 // }
 }
     google.maps.event.addDomListener(window, 'load', initialize);
