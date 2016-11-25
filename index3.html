@@ -690,6 +690,10 @@ for(i = 0; i < Coords.length; i++)
 google.maps.event.addListener(myPolygon, 'click',function(event){
     iw.setPosition(event.latLng);
 });
+     google.maps.event.addListener(map, 'click', function() {
+    iw.close();
+        map.animateCamera(CameraUpdateFactory.zoomBy(12.0,myCenter));
+  });
     google.maps.event.addListener(myPolygon, 'click', function(event) {
          myname = this.name;
       $.ajax({
@@ -755,7 +759,7 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
             type: 'pie'
         },
         title: {
-            text: 'Browser market shares January, 2015 to May, 2015'
+            text: 'Crime Type Statistics'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -773,29 +777,32 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
                 }
             }
         },
-        series: [{
-            name: 'Brands',
+                series: [{
+            name: 'takes part',
             colorByPoint: true,
             data: [{
-                name: 'Microsoft',
-                y: 26.33
+                name: 'Theft',
+                y: 56.33
             }, {
-                name: 'Chrome',
-                y: 34.03,
+                name: 'Car Accident',
+                y: 24.03,
                 sliced: true,
                 selected: true
             }, {
-                name: 'Firefox',
-                y: 20.38
-            }, {
-                name: 'Safari',
-                y: 14.77
-            }, {
-                name: 'Opera',
+                name: 'Physical offence',
+                y: 10.38
+            },  {
+                name: 'Property loss',
                 y: 0.91
             }, {
-                name: 'Others',
+                name: 'Sex offence',
                 y: 0.2
+            },{
+                name: 'Fraud',
+                y: 8.15
+            },{
+                name: 'Robbery',
+                y: 3.20
             }]
         }]
     });
@@ -822,7 +829,7 @@ google.maps.event.addListener(myPolygon, 'click',function(event){
   <a href="#" class="w3-hover-text-light-blue"><i class="fa fa-twitter"></i></a>
   <a href="#" class="w3-hover-text-grey"><i class="fa fa-flickr"></i></a>
   <a href="#" class="w3-hover-text-indigo"><i class="fa fa-linkedin"></i></a>
-  <p class="w3-medium">Powered by <a href="#" target="_blank">Group 10</a></p>
+  <p class="w3-medium">Powered by <a href="https://github.com/vssli/Waterloo-Crime-Map" target="_blank">vssli</a></p>
 </footer>
 
 <script>
