@@ -49,44 +49,121 @@ body {font-family: "Lato", sans-serif}
   </body>
   </html>
   <script>
-
-var myMap = new Map();
-myMap.set('tokyo',[7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5]);
-myMap.set('New York',[-0.2, 0.8, 5.7, 11.3]);
-myMap.set('Berlin',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('London',[3.9, 4.2, 5.7, 8.5]);
-myMap.set('Waterloo',[3.0,3.0,3.0,3.0]);
-
-myMap.set('Berlin1',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin2',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin3',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin4',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin5',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin6',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin7',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin8',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin9',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin0',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin11',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin12',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin13',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin14',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin15',[-0.9, 0.6, 3.5, 8.4]);
-myMap.set('Berlin',[-0.9, 0.6, 3.5, 8.4]);
-
-var myArray = new Array();
-
-$(function()
-        {
-          myMap.forEach(function(value,key){
-            var myObject = new Object();
-            myObject.name = key;
-            myObject.data = value;
-            myArray.push(myObject);
-          });
-          console.log(myArray.toString());
-        });
-var myXAxis = ['2011.1','2011.2','2011.3','2011.4','2011.5','2011.6','2011.7','2011.8','2011.9','2011.10','2011.11','2011.12','2012.1','2012.2','2012.3','20112.4','2012.5','2012.6','2012.7','2012.8','2012.9','2012.10','2012.11','2012.12','2013.1','2013.2','2013.3','2013.4','2013.5','2013.6','2013.7','2013.8','2013.9','2013.10','2013.11','2013.12'];
+var crime_by_month;
+      var myArray = new Array();
+$.ajax({ 
+type:"GET", 
+url:"jsp/crime_by_year.jsp", 
+dataType:"json", 
+success:function(data){ 
+//i表示在data中的索引位置，n表示包含的信息的对象 
+$.each(data,function(i,n){ 
+//获取对象中属性为optionsValue的值 
+    delete n["_id"];
+    crime_by_month = $.extend({},crime_by_month,n);
+}); 
+//    for(var el in crime_by_month)
+//        {
+//            myArray.push(el);
+//        }
+    crime_by_year = crime_by_month;
+    for(var el in crime_by_year)
+    {
+        var my2011_Jan = crime_by_year[el][2011]["Jan"];
+        var my2011_Feb = crime_by_year[el][2011]["Feb"]; 
+        var my2011_Mar = crime_by_year[el][2011]["Mar"];
+        var my2011_Apr = crime_by_year[el][2011]["Apr"];
+        var my2011_May = crime_by_year[el][2011]["May"];
+        var my2011_Jun = crime_by_year[el][2011]["Jn"];
+        var my2011_July = crime_by_year[el][2011]["Jl"];
+        var my2011_Aug = crime_by_year[el][2011]["Ag"];
+        var my2011_Sept = crime_by_year[el][2011]["Sep"];
+        var my2011_Oct = crime_by_year[el][2011]["Oct"];
+        var my2011_Nov = crime_by_year[el][2011]["Nov"];
+        var my2011_Dec = crime_by_year[el][2011]["Dec"];
+        var my2012_Jan = crime_by_year[el][2012]["Jan"];
+        var my2012_Feb = crime_by_year[el][2012]["Feb"]; 
+        var my2012_Mar = crime_by_year[el][2012]["Mar"];
+        var my2012_Apr = crime_by_year[el][2012]["Apr"];
+        var my2012_May = crime_by_year[el][2012]["May"];
+        var my2012_Jun = crime_by_year[el][2012]["Jn"];
+        var my2012_July = crime_by_year[el][2012]["Jl"];
+        var my2012_Aug = crime_by_year[el][2012]["Ag"];
+        var my2012_Sept = crime_by_year[el][2012]["Sep"];
+        var my2012_Oct = crime_by_year[el][2012]["Oct"];
+        var my2012_Nov = crime_by_year[el][2012]["Nov"];
+        var my2012_Dec = crime_by_year[el][2012]["Dec"];
+        var my2013_Jan = crime_by_year[el][2013]["Jan"];
+        var my2013_Feb  = crime_by_year[el][2013]["Feb"];
+        var my2013_Mar = crime_by_year[el][2013]["Mar"];
+        var my2013_Apr = crime_by_year[el][2013]["Apr"];
+        var my2013_May = crime_by_year[el][2013]["May"];
+        var my2013_Jun = crime_by_year[el][2013]["Jn"];
+        var my2013_July = crime_by_year[el][2013]["Jl"];
+        var my2013_Aug = crime_by_year[el][2013]["Ag"];
+        var my2013_Sept = crime_by_year[el][2013]["Sep"];
+        var my2013_Oct = crime_by_year[el][2013]["Oct"];
+        var my2013_Nov = crime_by_year[el][2013]["Nov"];
+        var my2013_Dec = crime_by_year[el][2013]["Dec"];
+        var my2014_Jan = crime_by_year[el][2014]["Jan"];
+        var my2014_Feb  = crime_by_year[el][2014]["Feb"];
+        var my2014_Mar = crime_by_year[el][2014]["Mar"];
+        var my2014_Apr = crime_by_year[el][2014]["Apr"];
+        var my2014_May = crime_by_year[el][2014]["May"];
+        var my2014_Jun = crime_by_year[el][2014]["Jn"];
+        var my2014_July = crime_by_year[el][2014]["Jl"];
+        var my2014_Aug = crime_by_year[el][2014]["Ag"];
+        var my2014_Sept = crime_by_year[el][2014]["Sep"];
+        var my2014_Oct = crime_by_year[el][2014]["Oct"];
+        var my2014_Nov = crime_by_year[el][2014]["Nov"];
+        var my2014_Dec = crime_by_year[el][2014]["Dec"];
+        crime_by_year[el] = new Array(my2011_Jan,my2011_Feb,my2011_Mar,my2011_Apr,my2011_May,my2011_Jun,my2011_July,my2011_Aug,my2011_Sept,my2011_Oct,my2011_Nov,my2011_Dec,my2012_Jan,my2012_Feb,my2012_Mar,my2012_Apr,my2012_May,my2012_Jun,my2012_July,my2012_Aug,my2012_Sept,my2012_Oct,my2012_Nov,my2012_Dec,my2013_Jan,my2013_Feb,my2013_Mar,my2013_Apr,my2013_May,my2013_Jun,my2013_July,my2013_Aug,my2013_Sept,my2013_Oct,my2013_Nov,my2013_Dec,my2014_Jan,my2014_Feb,my2014_Mar,my2014_Apr,my2014_May,my2014_Jun,my2014_July,my2014_Aug,my2014_Sept,my2014_Oct,my2014_Nov,my2014_Dec);
+        var myObject = new Object();
+        myObject.data = crime_by_year[el];
+        myObject.name = el;
+        myArray.push(myObject);
+        //myArray.push(crime_by_year[el]);
+    }
+}
+});
+//      
+//var myMap = new Map();
+//myMap.set('tokyo',[7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5,7.0, 6.9, 9.5, 14.5]);
+//myMap.set('New York',[-0.2, 0.8, 5.7, 11.3]);
+//myMap.set('Berlin',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('London',[3.9, 4.2, 5.7, 8.5]);
+//myMap.set('Waterloo',[3.0,3.0,3.0,3.0]);
+//
+//myMap.set('Berlin1',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin2',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin3',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin4',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin5',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin6',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin7',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin8',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin9',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin0',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin11',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin12',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin13',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin14',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin15',[-0.9, 0.6, 3.5, 8.4]);
+//myMap.set('Berlin',[-0.9, 0.6, 3.5, 8.4]);
+//
+//var myArray = new Array();
+//
+//$(function()
+//        {
+//          myMap.forEach(function(value,key){
+//            var myObject = new Object();
+//            myObject.name = key;
+//            myObject.data = value;
+//            myArray.push(myObject);
+//          });
+//          console.log(myArray.toString());
+//        });
+var myXAxis = ['2011.1','2011.2','2011.3','2011.4','2011.5','2011.6','2011.7','2011.8','2011.9','2011.10','2011.11','2011.12','2012.1','2012.2','2012.3','20112.4','2012.5','2012.6','2012.7','2012.8','2012.9','2012.10','2012.11','2012.12','2013.1','2013.2','2013.3','2013.4','2013.5','2013.6','2013.7','2013.8','2013.9','2013.10','2013.11','2013.12','2014.1','2014.2','2014.3','2014.4','2014.5','2014.6','2014.7','2014.8','2014.9','2014.10','2014.11','2014.12'];
 // $(function () {
 //     var chart = new Highcharts.Chart({
 //         chart: {
@@ -138,7 +215,7 @@ $(function () {
             borderWidth: 0
         },
        
-        series: myArray        
+        series: myArray       
     });
 });
 var chart = $('#container').highcharts(),
